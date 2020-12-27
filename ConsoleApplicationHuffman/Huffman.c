@@ -18,7 +18,7 @@
 /// </summary>
 /// <param name="data"> Wert</param>
 /// <param name="freq">Anzahl</param>
-/// <returns></returns>
+/// <returns>Knoten mit allokiertem Speicher</returns>
 minNode* createNode(char data, unsigned int freq)
 {
     minNode* _node = malloc(sizeof(minNode));
@@ -33,8 +33,8 @@ minNode* createNode(char data, unsigned int freq)
     }
     else
     {
-        printf("Speicherfehler beim Erstellen eines MinHeap-Knotens\n");
-        return NULL;
+        printf("Es konnte kein Speicher allokiert werden\n");
+        exit(1); // Beenden mit Fehlermeldung
     }
 }
 
