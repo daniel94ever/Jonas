@@ -21,15 +21,15 @@
 /// <returns></returns>
 minNode* createNode(char data, unsigned int freq)
 {
-    minNode* temp = malloc(sizeof(minNode));
+    minNode* _node = malloc(sizeof(minNode));
     
-    if (temp)
+    if (_node)
     {
-        temp->left = temp->right = NULL;
-        temp->item = data;
-        temp->freq = freq;
+        _node->left = _node->right = NULL;
+        _node->item = data;
+        _node->freq = freq;
         
-        return temp;
+        return _node;
     }
     else
     {
