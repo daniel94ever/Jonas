@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 
 //Neuen MinHeap Knoten erstellen
@@ -49,7 +50,7 @@ void min_Sort(minNode* minArray, int index_preNode)
     int right = 2 * index_preNode + 2;
     int smallest_left = 0;
     int smallest_right = 0;
-    unsigned int heap_size = sizeOfHeap(minArray);
+    unsigned int heap_size = sizeOfArray(minArray);
     
     if (heap_size > left && minArray[left].freq < minArray[smallest].freq)
     {
@@ -78,20 +79,27 @@ void min_Sort(minNode* minArray, int index_preNode)
 
 
 //Länge des minNode-Pointers bestimmen
-unsigned int sizeOfHeap(minNode* minNode)
+unsigned int sizeOfArray(minNode* minNode)
 {
-    unsigned int ptr_size = 0;
-//    int cnt = 0;
-    
-    while (minNode->freq != 0)
-    {
-        printf("%c: %i\n", minNode->item, minNode->freq);
-        ptr_size++;
-        minNode++;
-    }
-    minNode = &minNode[0];
-    
-    return  ptr_size;
+//    int i_size = sizeof(&minNode) / sizeof(minNode[0]);
+//    unsigned int ptr_size = 0;
+//
+////    int cnt = 0;
+//    if (!minNode)
+//    {
+//        return 0;
+//    }
+//
+////    minNode = *minNode[0];
+//
+//    while (minNode->freq != 0)
+//    {
+////        printf("%c: %i\n", minNode->item, minNode->freq);
+//        ptr_size++;
+//        minNode++;
+//    }
+//    return  ptr_size;
+    return 0;
 }
 
 
@@ -114,9 +122,9 @@ unsigned int sizeOfInput(char *input)
 //Einfügen eines Knotens in den MinHeap
 void insertMinNode(minNode* nodeToAdd, minNode* nodeArray)
 {
-    unsigned int ptr_size = sizeOfHeap(nodeArray) - 1;
+    unsigned int ptr_size = sizeOfArray(nodeArray);
     
-    while (ptr_size && nodeToAdd->freq < nodeArray[(ptr_size - 1) / 2].freq)
+    while (nodeToAdd->freq < nodeArray[(ptr_size - 1) / 2].freq)
     {
         nodeArray[ptr_size] = nodeArray[(ptr_size -1) / 2];
         ptr_size = (ptr_size - 1) / 2;
@@ -128,7 +136,7 @@ void insertMinNode(minNode* nodeToAdd, minNode* nodeArray)
 //Erstellen eines fertigen MinHeaps
  minNode* createMinHeap(minNode* minNode)
 {
-    unsigned int heapSize = sizeOfHeap(minNode) -1;
+    unsigned int heapSize = sizeOfArray(minNode) -1;
     
     for (unsigned int i = (heapSize -1) / 2; i > 0; i--)
     {
@@ -142,46 +150,56 @@ void insertMinNode(minNode* nodeToAdd, minNode* nodeArray)
 //liest String ein und erzeugt daraus einen sortierten MinHeap
 minNode* sortInput(char *characters)
 {
-    int cnt = 0;
-    int index_values[255];
-    minNode* input = NULL;
-//    minNode* tmp = input;
-    
-    unsigned int inputLength = sizeOfInput(characters);
-    
-//    tmp = malloc(sizeof(minNode));
-    //Überarbeiten
-    input = malloc(sizeof(minNode));
-        
-    for(int k = 0; k < 255; k++)
+    //Default werte zuordnen
+    minNode* input[] = NULL;
+//    int sizeOfHeap(input) = -1;
+
+    //Solange man sich in dem String befindet
+    while(*characters != '\0')
     {
-        index_values[k] = 0;
-    }
-        
-    for (int i = 0; i < inputLength; i++)
-    {
-        index_values[(int) *characters]++;
-        printf("%c ", *characters);
+        bool b_exist = false;
+
+        //Solange man nicht alle Werte des Strings bearbeitet hat
+        int i_size = sizeof(&input) / sizeof(input[0]);
+        for (int i = 0; i < sizeOfArray(input); i++)
+        {
+            printf("%c = %c\n", *characters, input[i].item);
+            //Wenn schon ein Knoten mit dem char besteht
+            if (input[i].item == *characters)
+            {
+                //Anzahl erhöhen und tester erhöhen
+                input[i].freq++;
+                b_exist = true;
+                break;
+            }
+        }
+        //Wenn der tester nicht erhöht wurde
+        if (!b_exist)
+        {
+            //Neuen Knoten erstellen und einsortieren
+            if (input)
+            {
+                insertMinNode(createNode(*characters, 1), input);
+
+            }
+            else
+            {
+                input = createNode(*characters, 1);
+            }
+        }
+        //Gesamten Heap sortieren
+        min_Sort(input, 1);
         characters++;
     }
-        
-    for (int j = 0; j < 255; j++)
+    int k = sizeOfArray(input);
+    for (int j = 0; j < k - 1; j++)
     {
-        if (index_values[j])
-        {
-            input[cnt] = *createNode((char) j, index_values[j]);
-//            Pointer zurücksetzen (Allokieren tmp?)
-//            tmp[cnt] = *input;
-            printf("%c kam %i mal vor.\n", input[cnt].item, input[cnt].freq);
-            cnt++;
-//            input++;
-                    
-        }
+        printf("%c kam diesmal %i-mal vor.\n",input->item, input->freq);
+        input++;
     }
-//    input = tmp;
-//    free(tmp);
-    return createMinHeap(&input[0]);
+    return input;
 }
+
             
          
 minNode* extractMin(minNode* src_minNode)
@@ -190,9 +208,9 @@ minNode* extractMin(minNode* src_minNode)
     temp = malloc(sizeof(minNode));
     temp = &src_minNode[0];
     
-    src_minNode[0] = src_minNode[sizeOfHeap(src_minNode) - 1];
+    src_minNode[0] = src_minNode[sizeOfArray(src_minNode) - 1];
 //    wieso geht kein free?
-    free(&src_minNode[sizeOfHeap(src_minNode) - 1]);
+    free(&src_minNode[sizeOfArray(src_minNode) - 1]);
     
     
     min_Sort(src_minNode, 0);
@@ -210,7 +228,7 @@ minNode* createHuffmanTree(char* characters)
     
     minNode* minNode = sortInput(characters);
     
-    while (sizeOfHeap(minNode) != 1)
+    while (sizeOfArray(minNode) != 1)
     {
         //Zwei Knoten mit der geringsten Häufigkeit extrahieren
         left = extractMin(minNode);
