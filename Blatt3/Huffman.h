@@ -12,8 +12,8 @@ typedef struct MinNode
 {
     char item;
     unsigned int freq;
-    struct MinNode* left;
-    struct MinNode* right;
+//    struct MinNode* left;
+//    struct MinNode* right;
 } minNode;
 
 
@@ -25,7 +25,7 @@ void swapMinNodes(minNode* to_swap, int index, int index_next);
 
 void min_Sort(minNode* min_Array, int index_preNode);
 
-unsigned int sizeOfHeap(minNode* minNode);
+unsigned int sizeOfArray(minNode* minNode);
 
 unsigned int sizeOfInput(char *input);
 
