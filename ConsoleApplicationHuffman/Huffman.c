@@ -12,7 +12,13 @@
 #include <stdbool.h>
 
 
-//Neuen MinHeap Knoten erstellen
+
+/// <summary>
+/// Neuen MinHeap Knoten erstellen 
+/// </summary>
+/// <param name="data"> Wert</param>
+/// <param name="freq">Anzahl</param>
+/// <returns></returns>
 minNode* createNode(char data, unsigned int freq)
 {
     minNode* temp = malloc(sizeof(minNode));
@@ -217,7 +223,6 @@ minNode* extractMin(minNode* src_minNode)
     
     return temp;
 }
-
 
 
 minNode* createHuffmanTree(char* characters)
