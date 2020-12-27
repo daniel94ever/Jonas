@@ -117,7 +117,7 @@ unsigned int sizeOfInput(char *input)
     return  ptr_size;
 }
 
-
+//Test Test
 
 //Einfügen eines Knotens in den MinHeap
 void insertMinNode(minNode* nodeToAdd, minNode* nodeArray)
