@@ -14,7 +14,7 @@
 
 
 /// <summary>
-/// Neuen MinHeap Knoten erstellen 
+/// Neuen Knoten erstellen 
 /// </summary>
 /// <param name="data"> Wert</param>
 /// <param name="freq">Anzahl</param>
