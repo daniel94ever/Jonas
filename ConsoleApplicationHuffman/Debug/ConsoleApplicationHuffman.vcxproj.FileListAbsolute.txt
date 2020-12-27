@@ -1,0 +1,2 @@
+C:\Users\andre\Source\Repos\daniel94ever\Jonas\ConsoleApplicationHuffman\Debug\ConsoleApplicationHuffman.exe
+C:\Users\andre\Source\Repos\daniel94ever\Jonas\ConsoleApplicationHuffman\Debug\ConsoleApplicationHuffman.pdb
