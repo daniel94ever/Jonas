@@ -16,6 +16,7 @@ typedef struct MinNode
 //    struct MinNode* right;
 } minNode;
 
+//TestTest
 
 minNode* createNode(char data, unsigned int freq);
 
